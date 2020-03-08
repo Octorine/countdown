@@ -11,7 +11,6 @@ pub fn do_letters_puzzle() {
         .collect();
     words.sort_by_key(|w| w.len());
     words.reverse();
-    println!("Sig = {}", letter_sig.iter().collect::<String>());
     for word in words
         .iter()
         .filter(|w| sig_contains(&letter_sig, &sig(w)))

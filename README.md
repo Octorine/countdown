@@ -11,7 +11,6 @@ Enter "l" for letters, "n" for numbers, or "q" to quit
 $ l
 Enter a collection of letters with no spaces in between.
 $ gyhdnoeur
-Sig = deghnoruy
 9 greyhound
 8 hydrogen
 7 younger
