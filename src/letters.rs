@@ -1,9 +1,4 @@
-pub fn do_letters_puzzle() {
-    println!("Enter a collection of letters with no spaces in between.");
-    let mut letters = String::new();
-    std::io::stdin().read_line(&mut letters);
-
-    let mut letter_sig: Vec<char> = sig(letters.trim());
+pub fn solve(letters: &str) -> Vec<String> {
     let mut words: Vec<String> = std::fs::read_to_string("/usr/share/dict/words")
         .unwrap()
         .lines()
@@ -11,6 +6,15 @@ pub fn do_letters_puzzle() {
         .collect();
     words.sort_by_key(|w| w.len());
     words.reverse();
+    words
+}
+
+pub fn do_letters_puzzle() {
+    println!("Enter a collection of letters with no spaces in between.");
+    let mut letters = String::new();
+    std::io::stdin().read_line(&mut letters);
+    let mut letter_sig: Vec<char> = sig(letters.trim());
+    let words = solve(&letters);
     for word in words
         .iter()
         .filter(|w| sig_contains(&letter_sig, &sig(w)))

@@ -1,5 +1,14 @@
 use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
+
+pub fn solve(numbers: &Vec<i32>, goal: i32) -> String {
+    let mut m = HashMap::new();
+    add_values(numbers, &mut m);
+    match m.get(numbers).and_then(|m2| m2.get(&goal)) {
+        Some(e) => format!("{:?} = {}", e, goal),
+        None => "Not possible".to_string(),
+    }
+}
 pub fn do_numbers_puzzle() {
     println!("Enter a collection of numbers with spaces in between.");
     let mut numbers = String::new();
@@ -16,12 +25,7 @@ pub fn do_numbers_puzzle() {
         goal = goal_text.trim().parse().ok();
     }
     let goal = goal.unwrap();
-    let mut m = HashMap::new();
-    add_values(&numbers, &mut m);
-    match m.get(&numbers).and_then(|m2| m2.get(&goal)) {
-        Some(e) => println!("{:?} = {}", e, goal),
-        None => println!("Not possible"),
-    };
+    println!("{}", solve(&numbers, goal));
 }
 #[derive(Clone)]
 enum Expr {

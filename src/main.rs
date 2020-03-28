@@ -1,5 +1,6 @@
-mod letters;
-mod numbers;
+extern crate countdown;
+use countdown::letters;
+use countdown::numbers;
 fn main() {
     println!("Let's countdown!\n");
     let mut all_done = false;
