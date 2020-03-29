@@ -7,7 +7,7 @@ fn main() {
     while !all_done {
         let mut choice = String::new();
         println!("Enter \"l\" for letters, \"n\" for numbers, or \"q\" to quit");
-        std::io::stdin().read_line(&mut choice);
+        std::io::stdin().read_line(&mut choice).unwrap();
         let choice = choice.trim();
         if choice == "l" {
             letters::do_letters_puzzle();

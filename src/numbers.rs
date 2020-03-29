@@ -12,7 +12,7 @@ pub fn solve(numbers: &Vec<i32>, goal: i32) -> String {
 pub fn do_numbers_puzzle() {
     println!("Enter a collection of numbers with spaces in between.");
     let mut numbers = String::new();
-    std::io::stdin().read_line(&mut numbers);
+    std::io::stdin().read_line(&mut numbers).unwrap();
     let numbers: Vec<i32> = numbers
         .split_ascii_whitespace()
         .filter_map(|n| n.trim().parse().ok())
@@ -21,7 +21,7 @@ pub fn do_numbers_puzzle() {
     let mut goal: Option<i32> = None;
     while goal.is_none() {
         println!("Enter a goal number.");
-        std::io::stdin().read_line(&mut goal_text);
+        std::io::stdin().read_line(&mut goal_text).unwrap();
         goal = goal_text.trim().parse().ok();
     }
     let goal = goal.unwrap();
@@ -35,7 +35,7 @@ enum Expr {
     Mul(Box<Expr>, Box<Expr>),
     Div(Box<Expr>, Box<Expr>),
 }
-
+#[allow(dead_code)]
 impl Expr {
     fn eval(&self) -> i32 {
         use Expr::{Add, Div, Mul, Num, Sub};

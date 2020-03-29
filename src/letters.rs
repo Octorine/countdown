@@ -6,21 +6,20 @@ pub fn solve(letters: &str) -> Vec<String> {
         .collect();
     words.sort_by_key(|w| w.len());
     words.reverse();
+    let letter_sig: Vec<char> = sig(letters.trim());
     words
+        .into_iter()
+        .filter(|w| sig_contains(&letter_sig, &sig(w)))
+        .take(5)
+        .collect()
 }
 
 pub fn do_letters_puzzle() {
     println!("Enter a collection of letters with no spaces in between.");
     let mut letters = String::new();
-    std::io::stdin().read_line(&mut letters);
-    let mut letter_sig: Vec<char> = sig(letters.trim());
-    let words = solve(&letters);
-    for word in words
-        .iter()
-        .filter(|w| sig_contains(&letter_sig, &sig(w)))
-        .take(5)
-    {
-        println!("{} {}", word.len(), word.clone());
+    std::io::stdin().read_line(&mut letters).unwrap();
+    for word in solve(&letters).iter() {
+        println!("{} {}", word.len(), word);
     }
 }
 
