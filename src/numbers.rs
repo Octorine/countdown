@@ -124,18 +124,18 @@ fn add_values(nums: &Vec<i32>, m: &mut HashMap<Vec<i32>, HashMap<i32, Expr>>) {
             for (k, v) in left_values.iter().chain(right_values.iter()) {
                 new_values.insert(*k, v.clone());
             }
-            for (lk, lv) in left_values.iter().map(|(k, v)| (k.clone(), v.clone())) {
-                for (rk, rv) in right_values.iter().map(|(k, v)| (k.clone(), v.clone())) {
+            for (lk, lv) in left_values.iter() {
+                for (rk, rv) in right_values.iter() {
                     new_values.insert(lk + rk, lv.clone().add(rv.clone()));
                     new_values.insert(lk * rk, lv.clone().mul(rv.clone()));
                     if lk >= rk {
                         new_values.insert(lk - rk, lv.clone().sub(rv.clone()));
-                        if rk != 0 && lk % rk == 0 {
+                        if rk != &0 && lk % rk == 0 {
                             new_values.insert(lk / rk, lv.clone().div(rv.clone()));
                         }
                     } else {
                         new_values.insert(rk - lk, rv.clone().sub(lv.clone()));
-                        if lk != 0 && rk % lk == 0 {
+                        if lk != &0 && rk % lk == 0 {
                             new_values.insert(rk / lk, rv.clone().div(lv.clone()));
                         }
                     }
