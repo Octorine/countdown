@@ -1,3 +1,7 @@
+// The following function contains the path to a list of english words, one per
+// line.  The location of this file may vary per system, so you may need to
+// adjust this path accordingly.
+
 pub fn solve(letters: &str) -> Vec<String> {
     let mut words: Vec<String> = std::fs::read_to_string("/usr/share/dict/words")
         .unwrap()
@@ -22,6 +26,12 @@ pub fn do_letters_puzzle() {
         println!("{} {}", word.len(), word);
     }
 }
+
+// Compute the signature of a word, which is just all of the letters in
+// alphabeticalorder. signatures have two useful properties.  Firstly, it's
+// easy to compare two signatures to see if one contains the other, and
+// secondly, for two collections of letters A and B, A contains all the letters
+// in B if sig(A) contains sig(B).
 
 fn sig(s: &str) -> Vec<char> {
     let mut cs: Vec<char> = s.chars().collect();
