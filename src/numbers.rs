@@ -94,7 +94,7 @@ fn test_eval() {
 }
 #[test]
 fn test_debug() {
-    assert_eq!(format!("{:?}", Expr::Num(2).add(Expr::Num(2))), "(2) + (2)")
+    assert_eq!(format!("{:?}", Expr::Num(2).add(Expr::Num(2))), "2 + 2")
 }
 
 fn nth_partition(v: &Vec<i32>, n: usize) -> (Vec<i32>, Vec<i32>) {
