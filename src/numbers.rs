@@ -59,17 +59,32 @@ impl Expr {
     fn div(self, other: Expr) -> Expr {
         Expr::Div(Box::new(self), Box::new(other))
     }
+    fn to_string(&self, level: usize) -> String {
+        match &self {
+            Expr::Num(n) => format!("{:?}", n),
+            &Expr::Add(a, b) => {
+                if level > 1 {
+                    format!("({} + {})", a.to_string(2), b.to_string(1))
+                } else {
+                    format!("{} + {}", a.to_string(1), b.to_string(1))
+                }
+            }
+            &Expr::Sub(a, b) => {
+                if level > 1 {
+                    format!("({} - {})", a.to_string(2), b.to_string(1))
+                } else {
+                    format!("{} - {}", a.to_string(1), b.to_string(1))
+                }
+            }
+            &Expr::Mul(a, b) => format!("{} * {}", a.to_string(2), b.to_string(2)),
+            &Expr::Div(a, b) => format!("{} / {}", a.to_string(2), b.to_string(2)),
+        }
+    }
 }
 
 impl Debug for Expr {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match &self {
-            Expr::Num(n) => write!(f, "{:?}", n),
-            &Expr::Add(a, b) => write!(f, "({:?}) + ({:?})", a, b),
-            &Expr::Sub(a, b) => write!(f, "({:?}) - ({:?})", a, b),
-            &Expr::Mul(a, b) => write!(f, "({:?}) * ({:?})", a, b),
-            &Expr::Div(a, b) => write!(f, "({:?}) / ({:?})", a, b),
-        }
+      write!(f, "{}", &self.to_string(0))
     }
 }
 
