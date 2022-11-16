@@ -10,7 +10,7 @@ pub fn solve(letters: &str) -> Vec<String> {
         .collect();
     words.sort_by_key(|w| w.len());
     words.reverse();
-    let letter_sig: Vec<char> = sig(letters.trim());
+    let letter_sig: Sig = sig(letters.trim());
     words
         .into_iter()
         .filter(|w| sig_contains(&letter_sig, &sig(w)))
@@ -26,6 +26,8 @@ pub fn do_letters_puzzle() {
         println!("{} {}", word.len(), word);
     }
 }
+#[derive(Debug)]
+struct Sig(Vec<char>);
 
 // Compute the signature of a word, which is just all of the letters in
 // alphabetical order. signatures have two useful properties.  Firstly, it's
@@ -33,21 +35,21 @@ pub fn do_letters_puzzle() {
 // secondly, for two collections of letters A and B, A contains all the letters
 // in B if sig(A) contains sig(B).
 
-fn sig(s: &str) -> Vec<char> {
+fn sig(s: &str) -> Sig {
     let mut cs: Vec<char> = s.chars().collect();
     cs.sort();
-    cs
+    Sig(cs)
 }
 
-fn sig_contains(big: &Vec<char>, small: &Vec<char>) -> bool {
+fn sig_contains(big: &Sig, small: &Sig) -> bool {
     let mut i = 0;
     let mut j = 0;
     loop {
-        if j == small.len() {
+        if j == small.0.len() {
             return true;
-        } else if i == big.len() {
+        } else if i == big.0.len() {
             return false;
-        } else if big[i] == small[j] {
+        } else if big.0[i] == small.0[j] {
             i += 1;
             j += 1;
         } else {
