@@ -28,7 +28,7 @@ pub fn do_letters_puzzle() {
 }
 
 // Compute the signature of a word, which is just all of the letters in
-// alphabeticalorder. signatures have two useful properties.  Firstly, it's
+// alphabetical order. signatures have two useful properties.  Firstly, it's
 // easy to compare two signatures to see if one contains the other, and
 // secondly, for two collections of letters A and B, A contains all the letters
 // in B if sig(A) contains sig(B).
