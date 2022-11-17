@@ -1,11 +1,11 @@
 use std::collections::HashMap;
-use std::fmt::{Debug, Formatter};
+use std::fmt::{Debug, Display, Formatter};
 
 pub fn solve(numbers: &Vec<i32>, goal: i32) -> String {
     let mut m = HashMap::new();
     add_values(numbers, &mut m);
     match m.get(numbers).and_then(|m2| m2.get(&goal)) {
-        Some(e) => format!("{:?} = {}", e, goal),
+        Some(e) => format!("{} = {}", e, goal),
         None => "Not possible".to_string(),
     }
 }
@@ -27,7 +27,7 @@ pub fn do_numbers_puzzle() {
     let goal = goal.unwrap();
     println!("{}", solve(&numbers, goal));
 }
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 enum Expr {
     Num(i32),
     Add(Box<Expr>, Box<Expr>),
@@ -59,32 +59,32 @@ impl Expr {
     fn div(self, other: Expr) -> Expr {
         Expr::Div(Box::new(self), Box::new(other))
     }
-    fn to_string(&self, level: usize) -> String {
+    fn to_string_lvl(&self, level: usize) -> String {
         match &self {
             Expr::Num(n) => format!("{:?}", n),
             &Expr::Add(a, b) => {
                 if level > 1 {
-                    format!("({} + {})", a.to_string(2), b.to_string(1))
+                    format!("({} + {})", a.to_string_lvl(2), b.to_string_lvl(1))
                 } else {
-                    format!("{} + {}", a.to_string(1), b.to_string(1))
+                    format!("{} + {}", a.to_string_lvl(1), b.to_string_lvl(1))
                 }
             }
             &Expr::Sub(a, b) => {
                 if level > 1 {
-                    format!("({} - {})", a.to_string(2), b.to_string(1))
+                    format!("({} - {})", a.to_string_lvl(2), b.to_string_lvl(1))
                 } else {
-                    format!("{} - {}", a.to_string(1), b.to_string(1))
+                    format!("{} - {}", a.to_string_lvl(1), b.to_string_lvl(1))
                 }
             }
-            &Expr::Mul(a, b) => format!("{} * {}", a.to_string(2), b.to_string(2)),
-            &Expr::Div(a, b) => format!("{} / {}", a.to_string(2), b.to_string(2)),
+            &Expr::Mul(a, b) => format!("{} * {}", a.to_string_lvl(2), b.to_string_lvl(2)),
+            &Expr::Div(a, b) => format!("{} / {}", a.to_string_lvl(2), b.to_string_lvl(2)),
         }
     }
 }
 
-impl Debug for Expr {
+impl Display for Expr {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-      write!(f, "{}", &self.to_string(0))
+        write!(f, "{}", &self.to_string_lvl(0))
     }
 }
 
@@ -93,8 +93,8 @@ fn test_eval() {
     assert_eq!((Expr::Num(1).add(Expr::Num(1))).mul(Expr::Num(3)).eval(), 6);
 }
 #[test]
-fn test_debug() {
-    assert_eq!(format!("{:?}", Expr::Num(2).add(Expr::Num(2))), "2 + 2")
+fn test_display() {
+    assert_eq!(format!("{}", Expr::Num(2).add(Expr::Num(2))), "2 + 2")
 }
 
 fn nth_partition(v: &Vec<i32>, n: usize) -> (Vec<i32>, Vec<i32>) {
