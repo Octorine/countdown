@@ -3,7 +3,11 @@
 // adjust this path accordingly.
 
 pub fn solve(letters: &str) -> Vec<String> {
-    let mut words: Vec<String> = std::fs::read_to_string("/usr/share/dict/words")
+    let scowl = std::env!("SCOWL");
+    let words_path = format!("{}/share/dict/words.txt", scowl);
+    let mut words: Vec<String> = std::fs::read(words_path)
+        .as_ref()
+        .and_then(|words| Ok(String::from_utf8_lossy(words)))
         .unwrap()
         .lines()
         .map(|l| l.to_string())

@@ -4,5 +4,7 @@
             with pkgs.buildPackages;
                 [rustc
                  cargo
-                 rust-analyzer];
+                 rust-analyzer
+                 scowl];
+        SCOWL = "${pkgs.scowl}";
     }
