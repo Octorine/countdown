@@ -1,9 +1,9 @@
-// The following function contains the path to a list of english words, one per
-// line.  The location of this file may vary per system, so you may need to
-// adjust this path accordingly.
+// The following function contains the path to a list of english
+// words, one per line.  The location of this file is given in the
+// DICTIONARY environment variable.
 
 pub fn solve(letters: &str) -> Vec<String> {
-    let mut words: Vec<String> = std::fs::read_to_string("/usr/share/dict/words")
+    let mut words: Vec<String> = std::fs::read_to_string(format!"{}", std::env::var("DICTIONARY").expect("DICTIONARY environment variable not set"))
         .unwrap()
         .lines()
         .map(|l| l.to_string())
